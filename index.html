@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mritunjay &amp; Rashmi — Wedding Invitation">
 <meta property="og:description" content="With love, the Gupta family invites you • 26 November • Raipur">
-<meta property="og:image" content="images/images1.jpg">
+<meta property="og:image" content="images/images.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,13 +41,16 @@ body{background:var(--maroon);color:var(--ink);font-family:'Montserrat',sans-ser
 .hero{position:relative;width:100%;height:100vh;height:100dvh;background:#170208;overflow:hidden}
 .video-gpu-accelerator{position:absolute;inset:0;z-index:1;transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 #bgVideo{width:100%;height:100%;object-fit:cover;background:#170208;display:block}
-.hero-fallback{position:absolute;inset:0;z-index:0;background:url('images/images.png') center/contain no-repeat #170208;
-  transform:scale(1);animation:none}
+.hero-fallback{position:absolute;inset:0;z-index:0;background:#170208}
 @keyframes kb{from{transform:scale(1.08) translateY(0)}to{transform:scale(1.18) translateY(-14px)}}
 .hero-shade{position:absolute;inset:0;z-index:2;pointer-events:none;
   background:linear-gradient(180deg,rgba(23,2,8,.55),rgba(23,2,8,.15) 42%,rgba(23,2,8,.85));
   opacity:0;transition:opacity 1.2s ease}
 .hero.opened .hero-shade{opacity:1}
+
+/* transparent tap gate */
+.tap-gate{position:absolute;inset:0;z-index:10;cursor:pointer;background:transparent}
+.tap-gate.hide{display:none}
 
 /* details layer */
 .details-content-layer{position:absolute;top:24%;left:6%;width:88%;max-height:64%;z-index:5;
@@ -213,11 +216,14 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
   <section class="hero" id="hero">
     <div class="hero-fallback" id="heroFallback"></div>
     <div class="video-gpu-accelerator">
-      <video id="bgVideo" autoplay playsinline webkit-playsinline muted preload="auto" poster="images/images.png">
+      <video id="bgVideo" playsinline webkit-playsinline muted preload="auto">
         <source src="video/envelope.mp4" type="video/mp4">
       </video>
     </div>
     <div class="hero-shade"></div>
+
+    <!-- invisible tap gate — lets video first frame show through -->
+    <div class="tap-gate" id="tapGate"></div>
 
     <!-- details revealed after the envelope opens -->
     <div class="details-content-layer" id="detailsLayer">
@@ -260,8 +266,8 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
         <div class="line"></div>
         <div class="lbl">Parents</div>
         <p>Shri Rajiv Gupta<br>Smt. Rupali Gupta</p>
-        <!-- <div class="lbl">Nanihal Paksh</div>
-        <p>Sh. Om Prakash Agarwal<br>Rahul Agarwal</p> -->
+        <div class="lbl">Nanihal Paksh</div>
+        <p>Sh. Om Prakash Agarwal<br>Rahul Agarwal</p>
       </div>
       <div class="fam slide-r">
         <div class="role">The Bride</div>
@@ -418,9 +424,11 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
 
   function startVideo(){
     if(opened) return; opened = true;
+    tapGate.classList.add('hide');
+    document.documentElement.classList.remove('lock');
+    document.body.classList.remove('lock');
     tryMusic();
     if(!hasVideo){
-      /* No video — reveal over the fallback logo */
       setTimeout(revealDetails, 800);
       return;
     }
@@ -435,14 +443,12 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
     video.addEventListener('ended', function(){ video.pause(); });
   }
 
-  /* Wait for the video to be ready, or start without it */
-  if(video.readyState >= 3){
-    startVideo();
-  } else {
-    video.addEventListener('canplay', function onReady(){ video.removeEventListener('canplay', onReady); startVideo(); });
-    /* If video never becomes ready within 3s, go without it */
-    setTimeout(function(){ if(!opened){ hasVideo = false; video.style.display='none'; startVideo(); } }, 3000);
-  }
+  /* Lock scroll and wait for user tap */
+  var tapGate = document.getElementById('tapGate');
+  document.documentElement.classList.add('lock');
+  document.body.classList.add('lock');
+  tapGate.addEventListener('click', startVideo);
+
   cue.addEventListener('click', function(){
     var m = document.querySelector('.marquee');
     if(m) m.scrollIntoView({behavior:'smooth'});
