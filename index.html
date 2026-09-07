@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mritunjay &amp; Rashmi — Wedding Invitation">
 <meta property="og:description" content="With love, the Gupta family invites you • 26 November • Raipur">
-<meta property="og:image" content="images/images.png">
+<meta property="og:image" content="images/images.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,17 +48,6 @@ body{background:var(--maroon);color:var(--ink);font-family:'Montserrat',sans-ser
   background:linear-gradient(180deg,rgba(23,2,8,.55),rgba(23,2,8,.15) 42%,rgba(23,2,8,.85));
   opacity:0;transition:opacity 1.2s ease}
 .hero.opened .hero-shade{opacity:1}
-
-/* tap to open */
-.tap-overlay{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  cursor:pointer;background:rgba(0,0,0,.18);transition:opacity .6s ease}
-.tap-overlay.hide{opacity:0;pointer-events:none}
-.wax-seal-pulse{position:relative;width:96px;height:96px;border-radius:50%;
-  border:2px dashed rgba(224,184,105,.8);background:rgba(224,184,105,.14);
-  display:flex;align-items:center;justify-content:center;color:var(--gold-soft);font-size:34px;
-  animation:pulseWave 2.1s infinite ease-in-out}
-@keyframes pulseWave{0%{transform:scale(.9);opacity:.55}50%{transform:scale(1.14);opacity:1}100%{transform:scale(.9);opacity:.55}}
-.tap-label{margin-top:20px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-soft);text-shadow:0 2px 10px rgba(0,0,0,.8)}
 
 /* details layer */
 .details-content-layer{position:absolute;top:24%;left:6%;width:88%;max-height:64%;z-index:5;
@@ -108,6 +97,12 @@ body{background:var(--maroon);color:var(--ink);font-family:'Montserrat',sans-ser
 .lead{max-width:370px;margin:16px auto 0;font-size:13.5px;line-height:1.8;color:#5c4650;font-style:italic}
 .gurmukhi{font-size:22px;color:var(--marigold);font-family:'Marcellus',serif}
 
+/* circular logo */
+.logo-circle{width:90px;height:90px;border-radius:50%;overflow:hidden;margin:0 auto 16px;
+  border:2px solid var(--gold-lt);box-shadow:0 6px 20px rgba(61,7,19,.18);background:var(--maroon)}
+.logo-circle img{width:100%;height:100%;object-fit:cover;display:block}
+.logo-circle.sm{width:60px;height:60px;border-width:1.5px;margin-bottom:12px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+
 /* families */
 .fam-grid{display:grid;gap:16px;margin-top:26px}
 .fam{border:1px solid rgba(184,135,62,.35);border-radius:16px;background:linear-gradient(180deg,#fffaf0,var(--cream-2));padding:22px 18px;box-shadow:0 12px 26px rgba(61,7,19,.10)}
@@ -134,14 +129,6 @@ body{background:var(--maroon);color:var(--ink);font-family:'Montserrat',sans-ser
 .f-line{width:36px;height:1px;background:var(--gold-lt);margin:12px auto}
 .f-date{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.4px}
 .f-venue{font-size:11.5px;color:#5a4650;line-height:1.55;margin-top:8px}
-.f-btns{margin-top:15px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.maplink{display:inline-block;font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:2px;text-transform:uppercase;font-weight:600;
-  color:#fff;background:linear-gradient(135deg,var(--marigold),var(--maroon-2));padding:9px 18px;border-radius:40px;
-  text-decoration:none;box-shadow:0 8px 18px rgba(61,7,19,.28)}
-.ics-btn{display:inline-flex;align-items:center;gap:7px;cursor:pointer;font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:2px;
-  text-transform:uppercase;font-weight:600;color:var(--gold);background:transparent;border:1px solid var(--gold);border-radius:40px;padding:9px 18px;
-  transition:background .25s ease,color .25s ease}
-.ics-btn:hover{background:var(--gold);color:#fff}
 .scratch{position:absolute;inset:0;z-index:2;touch-action:pan-y;cursor:grab;display:block;width:100%;height:100%}
 .f-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:3;pointer-events:none;
   background:rgba(61,7,19,.62);color:#fff8ec;font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;
@@ -153,7 +140,7 @@ body{background:var(--maroon);color:var(--ink);font-family:'Montserrat',sans-ser
 .scratch,.f-hint,.f-emblem{transition:opacity .55s ease}
 .fcard.revealed .scratch,.fcard.revealed .f-hint,.fcard.revealed .f-emblem{opacity:0;pointer-events:none}
 
-/* heart scratch card — the wedding day only */
+/* heart scratch card */
 .fcard.heart{aspect-ratio:1/1;border:none;box-shadow:none;background:transparent;overflow:hidden;
   -webkit-clip-path:url(#heartClip);clip-path:url(#heartClip);filter:drop-shadow(0 16px 26px rgba(92,15,30,.32))}
 .fcard.heart .fcard-base{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -163,8 +150,6 @@ body{background:var(--maroon);color:var(--ink);font-family:'Montserrat',sans-ser
 .fcard.heart .f-line{margin:8px auto}
 .fcard.heart .f-date{font-size:12px}
 .fcard.heart .f-venue{font-size:10px}
-.fcard.heart .f-btns{margin-top:10px;gap:6px}
-.fcard.heart .maplink,.fcard.heart .ics-btn{padding:7px 13px;font-size:7.5px}
 .fcard.heart .f-hint{display:none}
 .fcard.heart .f-emblem{font-size:12px;letter-spacing:2px;color:rgba(255,255,255,.94)}
 
@@ -228,7 +213,7 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
   <section class="hero" id="hero">
     <div class="hero-fallback" id="heroFallback"></div>
     <div class="video-gpu-accelerator">
-      <video id="bgVideo" playsinline webkit-playsinline muted preload="auto" poster="images/images.png">
+      <video id="bgVideo" autoplay playsinline webkit-playsinline muted preload="auto" poster="images/images.png">
         <source src="video/envelope.mp4" type="video/mp4">
       </video>
     </div>
@@ -245,7 +230,6 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
       <div class="doli">🌼</div>
     </div>
 
-
     <div class="scroll-cue" id="scrollCue">
       <span>Scroll</span><i class="chev">⌄</i>
     </div>
@@ -258,6 +242,7 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
 
   <!-- ============ BLESSING ============ -->
   <section class="section reveal">
+    <div class="logo-circle"><img src="images/images.png" alt="M &amp; R"></div>
     <div class="eyebrow">Om Ganeshaya Namah</div>
     <h2 class="gurmukhi">ॐ श्री गणेशाय नमः</h2>
     <p class="lead">With the blessings of the Almighty and our elders, two families come together in joy.
@@ -268,29 +253,22 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
 
   <!-- ============ FAMILIES ============ -->
   <section class="section" style="background:linear-gradient(180deg,#fffaf0,var(--cream))">
-
     <div class="fam-grid">
       <div class="fam slide-l">
         <div class="role">The Groom</div>
         <h3>Mritunjay</h3>
         <div class="line"></div>
-        <div class="lbl">Grandparents</div>
-        <p>Sh. Radhey Shyam Gupta<br>Late Smt. Lajja Gupta</p>
         <div class="lbl">Parents</div>
-        <p>Mr. Rajiv Gupta<br>Mrs. Rupali Gupta</p>
-        <div class="lbl">Brother</div>
-        <p>Varun Gupta</p>
-        <div class="lbl">Nanihal Paksh</div>
-        <p>Sh. Om Prakash Agarwal<br>Rahul Agarwal</p>
+        <p>Shri Rajiv Gupta<br>Smt. Rupali Gupta</p>
+        <!-- <div class="lbl">Nanihal Paksh</div>
+        <p>Sh. Om Prakash Agarwal<br>Rahul Agarwal</p> -->
       </div>
       <div class="fam slide-r">
         <div class="role">The Bride</div>
         <h3>Rashmi</h3>
         <div class="line"></div>
-        <div class="lbl">Grandparents</div>
-        <p>Late Shri Vijay Singh Nahar<br>Smt. Vimala Nahar</p>
         <div class="lbl">Parents</div>
-        <p>Mr. Rakesh Nahar<br>Mrs. Kavita Nahar</p>
+        <p>Shri Rakesh Nahar<br>Smt. Kavita Nahar</p>
       </div>
     </div>
   </section>
@@ -324,10 +302,6 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
           <div class="f-line"></div>
           <div class="f-date">Wednesday, 25 November 2026 · 12 PM onwards</div>
           <div class="f-venue">Sudharma Bhawan<br>Pachpedi Naka, Raipur,<br>Chhattisgarh</div>
-          <div class="f-btns">
-            <a class="maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Sudharma+Bhawan+Pachpedi+Naka+Raipur+Chhattisgarh">Maps</a>
-            <button class="ics-btn" data-title="Haldi — Mritunjay weds Rashmi" data-start="20261125T063000Z" data-end="20261125T103000Z" data-loc="Sudharma Bhawan, Pachpedi Naka, Raipur, Chhattisgarh" data-desc="Haldi Ceremony">+ Calendar</button>
-          </div>
         </div>
         <canvas class="scratch"></canvas>
         <div class="f-emblem"><span class="big">✦</span>25 November<i>Scratch to reveal</i></div>
@@ -343,10 +317,6 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
           <div class="f-line"></div>
           <div class="f-date">Wednesday, 25 November 2026 · 7:30 PM onwards</div>
           <div class="f-venue">Sudharma Bhawan<br>Pachpedi Naka, Raipur,<br>Chhattisgarh</div>
-          <div class="f-btns">
-            <a class="maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Sudharma+Bhawan+Pachpedi+Naka+Raipur+Chhattisgarh">Maps</a>
-            <button class="ics-btn" data-title="Ring Ceremony — Mritunjay weds Rashmi" data-start="20261125T140000Z" data-end="20261125T173000Z" data-loc="Sudharma Bhawan, Pachpedi Naka, Raipur, Chhattisgarh" data-desc="Ring Ceremony">+ Calendar</button>
-          </div>
         </div>
         <canvas class="scratch"></canvas>
         <div class="f-emblem"><span class="big">✦</span>25 November<i>Scratch to reveal</i></div>
@@ -361,10 +331,6 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
           <div class="f-line"></div>
           <div class="f-date">Thursday, 26 November 2026</div>
           <div class="f-venue">Baraat · 11 AM onwards<br>Phere · 3 PM onwards<br><br>SS Farms, Raipur, Chhattisgarh</div>
-          <div class="f-btns">
-            <a class="maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=SS+Farms+Raipur+Chhattisgarh">Maps</a>
-            <button class="ics-btn" data-title="The Wedding — Mritunjay weds Rashmi" data-start="20261126T053000Z" data-end="20261126T123000Z" data-loc="SS Farms, Raipur, Chhattisgarh" data-desc="Baraat at 11 AM, Phere at 3 PM">+ Calendar</button>
-          </div>
         </div>
         <canvas class="scratch"></canvas>
         <div class="f-emblem"><span class="big">❤</span>Scratch the heart</div>
@@ -380,10 +346,6 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
           <div class="f-line"></div>
           <div class="f-date">Thursday, 26 November 2026 · 7 PM onwards</div>
           <div class="f-venue">SS Farms<br>Raipur, Chhattisgarh</div>
-          <div class="f-btns">
-            <a class="maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=SS+Farms+Raipur+Chhattisgarh">Maps</a>
-            <button class="ics-btn" data-title="Sangeet &amp; Reception — Mritunjay weds Rashmi" data-start="20261126T133000Z" data-end="20261126T183000Z" data-loc="SS Farms, Raipur, Chhattisgarh" data-desc="Sangeet followed by Reception">+ Calendar</button>
-          </div>
         </div>
         <canvas class="scratch"></canvas>
         <div class="f-emblem"><span class="big">✦</span>26 November<i>Scratch to reveal</i></div>
@@ -416,7 +378,7 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
   </section>
 
   <footer>
-    <div class="mark">✦ ❁ ✦</div>
+    <div class="logo-circle sm"><img src="images/images.png" alt="M &amp; R"></div>
     <div class="fnames">Mritunjay &amp; Rashmi</div>
     <div class="fmeta">26 November · Raipur</div>
     <div class="fbless">ईश्वर इस जोड़ी को सदा खुश रखे —<br>come, bless the beautiful couple.</div>
@@ -467,7 +429,7 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
       setTimeout(revealDetails, 400);
     }
   }
-  /* Auto-play on page load — no tap needed */
+  /* Auto-play on page load */
   openInvite();
   cue.addEventListener('click', function(){
     var m = document.querySelector('.marquee');
@@ -484,7 +446,7 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
     else { music.pause(); mBtn.classList.remove('playing'); mBtn.textContent='♪̸'; }
   });
 
-  /* ---------- countdown to the wedding ---------- */
+  /* ---------- countdown ---------- */
   var target = new Date('2026-11-26T18:00:00+05:30').getTime();
   function tick(){
     var d = target - Date.now();
@@ -565,35 +527,6 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
   }
   var cards = document.querySelectorAll('[data-scratch]');
   for(var ci=0; ci<cards.length; ci++) initScratch(cards[ci]);
-
-  /* ---------- add to calendar (.ics) ---------- */
-  function icsEsc(s){ return String(s||'').replace(/[\\;,]/g, function(m){return '\\'+m;}).replace(/\n/g,'\\n'); }
-  function stampNow(){ return new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'; }
-  function makeICS(b){
-    return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Mritunjay-Rashmi//Invite//EN','BEGIN:VEVENT',
-      'UID:'+Date.now()+'@invite','DTSTAMP:'+stampNow(),
-      'DTSTART:'+b.getAttribute('data-start'),'DTEND:'+b.getAttribute('data-end'),
-      'SUMMARY:'+icsEsc(b.getAttribute('data-title')),
-      'LOCATION:'+icsEsc(b.getAttribute('data-loc')),
-      'DESCRIPTION:'+icsEsc(b.getAttribute('data-desc')),
-      'END:VEVENT','END:VCALENDAR'].join('\r\n');
-  }
-  document.addEventListener('click', function(e){
-    var b = e.target;
-    while(b && b !== document && !(b.className && String(b.className).indexOf('ics-btn')>-1)) b = b.parentNode;
-    if(!b || b === document) return;
-    var ics = makeICS(b);
-    var name = (b.getAttribute('data-title')||'event').replace(/[^a-z0-9]+/gi,'-')+'.ics';
-    try{
-      var blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a'); a.href=url; a.download=name;
-      document.body.appendChild(a); a.click();
-      setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 400);
-    }catch(err){
-      window.location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
-    }
-  });
 
   /* ---------- scroll reveal ---------- */
   var revs = document.querySelectorAll('.reveal,.slide-l,.slide-r');
