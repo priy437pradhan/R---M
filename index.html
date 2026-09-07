@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mritunjay &amp; Rashmi — Wedding Invitation">
 <meta property="og:description" content="With love, the Gupta family invites you • 26 November • Raipur">
-<meta property="og:image" content="images/images.jpg">
+<meta property="og:image" content="images/images1.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,8 +41,8 @@ body{background:var(--maroon);color:var(--ink);font-family:'Montserrat',sans-ser
 .hero{position:relative;width:100%;height:100vh;height:100dvh;background:#170208;overflow:hidden}
 .video-gpu-accelerator{position:absolute;inset:0;z-index:1;transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 #bgVideo{width:100%;height:100%;object-fit:cover;background:#170208;display:block}
-.hero-fallback{position:absolute;inset:0;z-index:0;background:#170208;
-  transform:scale(1.08);animation:kb 18s ease-in-out infinite alternate;filter:saturate(1.05)}
+.hero-fallback{position:absolute;inset:0;z-index:0;background:url('images/images.png') center/contain no-repeat #170208;
+  transform:scale(1);animation:none}
 @keyframes kb{from{transform:scale(1.08) translateY(0)}to{transform:scale(1.18) translateY(-14px)}}
 .hero-shade{position:absolute;inset:0;z-index:2;pointer-events:none;
   background:linear-gradient(180deg,rgba(23,2,8,.55),rgba(23,2,8,.15) 42%,rgba(23,2,8,.85));
@@ -398,39 +398,51 @@ footer .fbless{font-family:'Playfair Display',serif;font-style:italic;font-size:
       fallback = document.getElementById('heroFallback'),
       opened = false, hasVideo = true;
 
-  video.addEventListener('error', function(){ hasVideo = false; video.style.display='none'; }, true);
-  video.addEventListener('loadeddata', function(){ fallback.style.display='none'; });
-
   var DETAILS_AT = 3200;
   var CUE_AT     = 5200;
 
-  var NAMES_IN_VIDEO = false;
+  /* Mark video broken on any error */
+  video.addEventListener('error', function(){ hasVideo = false; video.style.display='none'; }, true);
+  var src = video.querySelector('source');
+  if(src) src.addEventListener('error', function(){ hasVideo = false; video.style.display='none'; });
+
+  /* Hide fallback photo only once video actually has frames */
+  video.addEventListener('loadeddata', function(){ fallback.style.display='none'; });
+
   function revealDetails(){
-    if(NAMES_IN_VIDEO && hasVideo){ var hn=document.getElementById('heroNames'); if(hn) hn.style.display='none'; }
     hero.classList.add('opened');
     details.classList.add('active');
     startPetals();
     setTimeout(function(){ cue.classList.add('show'); }, CUE_AT - DETAILS_AT);
   }
 
-  function openInvite(){
+  function startVideo(){
     if(opened) return; opened = true;
     tryMusic();
-    if(hasVideo){
-      var p = video.play();
-      if(p && p.catch) p.catch(function(){ hasVideo=false; revealDetails(); });
-      var fired=false;
-      video.addEventListener('timeupdate', function onT(){
-        if(!fired && video.currentTime >= DETAILS_AT/1000){ fired=true; video.removeEventListener('timeupdate',onT); revealDetails(); }
-      });
-      setTimeout(function(){ if(!fired){ fired=true; revealDetails(); } }, DETAILS_AT + 600);
-      video.addEventListener('ended', function(){ video.pause(); });
-    } else {
-      setTimeout(revealDetails, 400);
+    if(!hasVideo){
+      /* No video — reveal over the fallback logo */
+      setTimeout(revealDetails, 800);
+      return;
     }
+    var p = video.play();
+    if(p && p.catch) p.catch(function(){ hasVideo=false; setTimeout(revealDetails, 800); });
+    var fired=false;
+    video.addEventListener('timeupdate', function onT(){
+      if(!fired && video.currentTime >= DETAILS_AT/1000){ fired=true; video.removeEventListener('timeupdate',onT); revealDetails(); }
+    });
+    /* Safety timeout in case timeupdate never fires */
+    setTimeout(function(){ if(!fired){ fired=true; revealDetails(); } }, DETAILS_AT + 800);
+    video.addEventListener('ended', function(){ video.pause(); });
   }
-  /* Auto-play on page load */
-  openInvite();
+
+  /* Wait for the video to be ready, or start without it */
+  if(video.readyState >= 3){
+    startVideo();
+  } else {
+    video.addEventListener('canplay', function onReady(){ video.removeEventListener('canplay', onReady); startVideo(); });
+    /* If video never becomes ready within 3s, go without it */
+    setTimeout(function(){ if(!opened){ hasVideo = false; video.style.display='none'; startVideo(); } }, 3000);
+  }
   cue.addEventListener('click', function(){
     var m = document.querySelector('.marquee');
     if(m) m.scrollIntoView({behavior:'smooth'});
